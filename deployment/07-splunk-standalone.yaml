@@ -14,10 +14,10 @@ spec:
       cpu: "2"
   etcVolumeStorageConfig:
     storageClassName: rook-ceph-block
-    storageCapacity: 3Gi
+    storageCapacity: 1Gi
   varVolumeStorageConfig:
     storageClassName: rook-ceph-block
-    storageCapacity: 30Gi
+    storageCapacity: 10Gi
   smartstore:
     defaults:
       volumeName: s2s3_vol
