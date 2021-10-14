@@ -1,0 +1,34 @@
+apiVersion: enterprise.splunk.com/v2
+kind: Standalone
+metadata:
+  name: s1
+  finalizers:
+  - enterprise.splunk.com/delete-pvc
+spec:
+  resources:
+    requests:
+      memory: "512Mi"
+      cpu: "0.1"
+    limits:
+      memory: "8Gi"
+      cpu: "2"
+  etcVolumeStorageConfig:
+    storageClassName: rook-ceph-block
+    storageCapacity: 3Gi
+  varVolumeStorageConfig:
+    storageClassName: rook-ceph-block
+    storageCapacity: 30Gi
+  smartstore:
+    defaults:
+      volumeName: s2s3_vol
+    indexes:
+    - name: test01
+      volumeName: s2s3_vol
+      remotePath: $_index_name
+    - name: test02
+    - name: test03
+    volumes:
+    - name: s2s3_vol
+      path: ceph-bkt-7fa83b45-8fa3-459b-9dad-55450ca7b9ac/splunk-01-data/
+      endpoint: http://rook-ceph-rgw-object-store.rook-ceph.svc:80
+      secretRef: s3-secret
